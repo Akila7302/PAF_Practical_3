@@ -8,7 +8,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Item {
-	
+
+//Database Connection	
 public Connection connect(){
 	
 	Connection con = null;
@@ -16,8 +17,8 @@ public Connection connect(){
 	try{
 		
 		Class.forName("com.mysql.jdbc.Driver");
-		con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/itemDB", "root", "5393");
-		
+		con= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/item_db","root", "root");
+		//For testing
 		System.out.print("Successfully connected");
 		
 	}
@@ -32,6 +33,7 @@ public Connection connect(){
 }
 
 
+//Insert
 public String insertItem(String code, String name, String price, String desc){ 
 	
 	
@@ -75,6 +77,7 @@ public String insertItem(String code, String name, String price, String desc){
 }
 
 
+//Read
 public String readItems()
 { 
 	 String output = ""; 
@@ -143,7 +146,7 @@ public String readItems()
 	return output; 
 }
 
-
+//Update
 public String UpdateItems(String itemID,String code, String name, String price, String desc)
 {
 	
@@ -177,28 +180,37 @@ public String UpdateItems(String itemID,String code, String name, String price, 
 	
 }
 
-
-public void DeleteItems(int id) {
+//Delete
+public String deleteItems(String itemID) {
 	
 		 String output = "";
-		 Connection connection = null;
-		 PreparedStatement preparedStatement = null;
+//		 Connection connection = null;
+//		 PreparedStatement preparedStatement = null;
 
-	try {
-		
-		Connection con = connect(); 
-		
-		
-		preparedStatement = con.prepareStatement("delete from items where itemID = ?");
-		preparedStatement.setInt(1, id);
-		preparedStatement.executeUpdate();
-		con.close(); 
-		output = "deleted successfully"; 
-		
-
-	} catch (Exception e) {
-		
-		e.printStackTrace();
+			try
+			{
+				Connection con = connect();
+			if (con == null)
+			{
+				return "Error while connecting to the database for deleting.";
+			}
+				// create a prepared statement
+				String query = "delete from items where itemID=?";
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				// binding values
+				preparedStmt.setInt(1, Integer.parseInt(itemID));
+				// execute the statement
+				preparedStmt.execute();
+				con.close();
+				
+				output = "Deleted successfully";
+			}
+			catch (Exception e)
+			{
+				output = "Error while deleting the item.";
+				System.err.println(e.getMessage());
+			}
+			return output;
 	
 	}
 	
@@ -207,4 +219,3 @@ public void DeleteItems(int id) {
 
 
 	
-}
