@@ -118,15 +118,15 @@ public String readItems()
 	 
 	 
 	 
-	 output += "<td><input name='btnUpdate' " 
-	 + " type='button' value='Update' onclick='UpdateItems()'></td>"
-	 + "<td><form method='post' action='items.jsp'>"
-	 + "<input name='btnRemove' " 
-	 + " type='submit' value='Remove' onclick='DeleteItems('"+itemID+"')'>"
-	 + "<input name='itemID' type='hidden' " 
-	 + " value='" + itemID + "'>" + "</form></td></tr>"; 
-	 } 
-	 
+	 	// buttons
+		 output += "<td><input name='btnUpdate' " 
+		 + " type='button' value='Update' onclick='UpdateItems()'class=\"btn btn-success\"></td>"
+		 + "<td><form method='post' action='items.jsp'>"
+		 + "<input name='btnRemove' " 
+		 + " type='submit' value='Remove' onclick='deleteItem()'class='btn btn-danger'>"
+		 + "<input name='itemID' type='hidden' " 
+		 + " value='" + itemID + "'>" + "</form></td></tr>"; 
+		 } 
 	 
 	 con.close(); 
 	
